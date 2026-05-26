@@ -1,7 +1,7 @@
-function TopBar() {
+function TopBar({ title }) {
   return (
     <header className="topbar">
-      <h2 className="topbar__title">대시보드</h2>
+      {title ? <h2 className="topbar__title">{title}</h2> : <span aria-hidden="true" />}
       <div className="topbar__profile">
         <span className="topbar__avatar" aria-hidden="true" />
         {/* TODO: 백엔드의 로그인 관리자 정보로 교체 */}
