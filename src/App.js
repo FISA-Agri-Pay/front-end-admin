@@ -1,15 +1,28 @@
 import './App.css';
+import { useState } from 'react';
 import Dashboard from './components/Dashboard';
+import ProductManagement from './components/product/ProductManagement';
 import Sidebar from './components/Sidebar';
 import TopBar from './components/TopBar';
 
+const topbarTitles = {
+  dashboard: '대시보드',
+  productList: '',
+  productCreate: '',
+};
+
 function App() {
+  const [activePage, setActivePage] = useState('dashboard');
+
   return (
     <div className="admin-app">
-      <Sidebar />
+      <Sidebar activePage={activePage} onNavigate={setActivePage} />
       <div className="admin-shell">
-        <TopBar />
-        <Dashboard />
+        <TopBar title={topbarTitles[activePage]} />
+        {activePage === 'dashboard' && <Dashboard />}
+        {(activePage === 'productList' || activePage === 'productCreate') && (
+          <ProductManagement activePage={activePage} onNavigate={setActivePage} />
+        )}
       </div>
     </div>
   );
