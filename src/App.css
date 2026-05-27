@@ -590,6 +590,14 @@ button {
   background: #cbd2d9;
 }
 
+.product-thumb--image {
+  object-fit: cover;
+}
+
+.product-thumb--image::after {
+  content: none;
+}
+
 .product-table__link {
   overflow: hidden;
   border: 0;
@@ -602,6 +610,14 @@ button {
   text-overflow: ellipsis;
   white-space: nowrap;
   font-weight: 800;
+}
+
+.product-table__empty {
+  display: grid;
+  min-height: 180px;
+  place-items: center;
+  color: var(--text-muted);
+  font-size: 14px;
 }
 
 .product-table__stock--empty {
@@ -664,6 +680,17 @@ button {
   margin-top: 18px;
 }
 
+.product-page__message {
+  margin: 0 0 12px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.product-page__message--error {
+  color: var(--red);
+}
+
 .pagination {
   display: flex;
   align-items: center;
@@ -680,6 +707,11 @@ button {
   background: transparent;
   color: #4f5965;
   cursor: pointer;
+}
+
+.pagination button:disabled {
+  color: #b8c0c9;
+  cursor: not-allowed;
 }
 
 .pagination .pagination__item--active {
@@ -769,7 +801,7 @@ button {
 }
 
 .form-row--media {
-  grid-template-columns: 120px 160px 90px 82px minmax(0, 1fr);
+  grid-template-columns: 120px 160px minmax(0, 1fr);
   align-items: start;
   gap: 20px;
   min-height: 170px;
@@ -791,6 +823,7 @@ button {
   width: 160px;
   height: 160px;
   border-style: dashed;
+  overflow: hidden;
 }
 
 .image-upload strong {
@@ -804,6 +837,30 @@ button {
   font-size: 12px;
   line-height: 1.5;
   text-align: center;
+}
+
+.image-upload__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.image-upload__preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-upload__filename {
+  align-self: center;
+  overflow: hidden;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .form-row--editor {
@@ -887,7 +944,7 @@ button {
   }
 
   .form-row--media {
-    grid-template-columns: 120px 160px 90px 82px;
+    grid-template-columns: 120px 160px minmax(0, 1fr);
   }
 
   .form-row--service {

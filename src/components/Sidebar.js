@@ -5,7 +5,7 @@ const menuItems = [
 ];
 
 function Sidebar({ activePage, onNavigate }) {
-  const isProductOpen = activePage === 'productList' || activePage === 'productCreate';
+  const isProductOpen = activePage === 'productList' || activePage === 'productCreate' || activePage === 'productEdit';
 
   return (
     <aside className="sidebar">
