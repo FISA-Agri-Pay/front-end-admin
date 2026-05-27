@@ -23,8 +23,8 @@ function RecentOrders() {
           <span role="columnheader">상품명</span>
           <span role="columnheader">금액</span>
         </div>
-        {orders.map((order) => (
-          <div className="orders-table__row" role="row" key={`${order.time}-${order.customer}`}>
+        {orders.map((order, index) => (
+          <div className="orders-table__row" role="row" key={`${order.time}-${order.customer}-${index}`}>
             <span role="cell">{order.time}</span>
             <span role="cell">{order.customer}</span>
             <span role="cell">{order.product}</span>

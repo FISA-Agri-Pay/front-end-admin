@@ -236,6 +236,7 @@ function ProductListPage({ onCategoriesLoaded = () => {}, onCreate, onEdit }) {
           {pageNumbers.map((page) => (
             <button
               className={page === pageInfo.page ? 'pagination__item--active' : ''}
+              aria-current={page === pageInfo.page ? 'page' : undefined}
               key={page}
               type="button"
               onClick={() => handleChangePage(page)}

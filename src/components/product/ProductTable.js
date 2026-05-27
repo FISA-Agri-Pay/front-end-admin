@@ -67,9 +67,11 @@ function ProductTable({ products, selectedIds, onSelect, onSelectAll, onEdit, on
                 )}
               </span>
               <span role="cell">{product.categoryName}</span>
-              <button className="product-table__link" role="cell" type="button" onClick={() => onEdit(product)}>
-                {product.name}
-              </button>
+              <span role="cell">
+                <button className="product-table__link" type="button" onClick={() => onEdit(product)}>
+                  {product.name}
+                </button>
+              </span>
               <span role="cell">{formatPrice(product.price)}</span>
               <strong className={product.stockQuantity === 0 ? 'product-table__stock--empty' : ''} role="cell">
                 {product.stockQuantity}
@@ -80,10 +82,10 @@ function ProductTable({ products, selectedIds, onSelect, onSelectAll, onEdit, on
                 </span>
               </span>
               <span className="product-table__actions" role="cell">
-                <button onClick={() => onEdit(product)} type="button">
+                <button aria-label={`${product.name} 수정`} onClick={() => onEdit(product)} type="button">
                   수정
                 </button>
-                <button onClick={() => onDelete(product.publicId)} type="button">
+                <button aria-label={`${product.name} 삭제`} onClick={() => onDelete(product.publicId)} type="button">
                   삭제
                 </button>
               </span>

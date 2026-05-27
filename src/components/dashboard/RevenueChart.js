@@ -6,21 +6,21 @@ const chartData = [
   { date: '5/8', amount: 375, label: '375만' },
   { date: '5/9', amount: 275, label: '275만' },
   { date: '5/10', amount: 75, label: '75만' },
-  { date: '5/11', amount: 320, label: '3.2M', highlight: true },
+  { date: '5/11', amount: 320, label: '320만', highlight: true },
 ];
 
 function RevenueChart() {
-  const maxAmount = 400;
+  const maxAmount = Math.max(...chartData.map((item) => item.amount), 1);
 
   return (
     <section className="panel chart-panel">
       <h3 className="panel__title">최근 7일 외상 이용 추이</h3>
       <div className="chart" aria-label="최근 7일 외상 이용 추이 차트">
         <div className="chart__scale" aria-hidden="true">
-          <span>400만</span>
-          <span>300만</span>
-          <span>200만</span>
-          <span>100만</span>
+          <span>{maxAmount}만</span>
+          <span>{Math.round(maxAmount * 0.75)}만</span>
+          <span>{Math.round(maxAmount * 0.5)}만</span>
+          <span>{Math.round(maxAmount * 0.25)}만</span>
           <span>0</span>
         </div>
         <div className="chart__plot">
