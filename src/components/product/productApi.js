@@ -33,11 +33,15 @@ export const requestApi = async (path, options = {}, fallbackMessage = '요청 �
   const contentType = response.headers.get('content-type') || '';
   const body = contentType.includes('application/json') ? await response.json() : null;
 
-  if (!response.ok || !isSuccessResponse(body)) {
+  if (!response.ok) {
     throw new Error(getErrorMessage(body, fallbackMessage, response));
   }
 
-  return body?.data;
+  if (body && !isSuccessResponse(body)) {
+    throw new Error(getErrorMessage(body, fallbackMessage, response));
+  }
+
+  return body?.data ?? null;
 };
 
 // 상품 목록 응답에 포함된 실제 카테고리 ID로 화면의 카테고리 옵션을 갱신하는 함수
