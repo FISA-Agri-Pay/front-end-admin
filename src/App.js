@@ -9,6 +9,7 @@ const topbarTitles = {
   dashboard: '대시보드',
   productList: '',
   productCreate: '',
+  productEdit: '',
 };
 
 function App() {
@@ -20,7 +21,7 @@ function App() {
       <div className="admin-shell">
         <TopBar title={topbarTitles[activePage]} />
         {activePage === 'dashboard' && <Dashboard />}
-        {(activePage === 'productList' || activePage === 'productCreate') && (
+        {(activePage === 'productList' || activePage === 'productCreate' || activePage === 'productEdit') && (
           <ProductManagement activePage={activePage} onNavigate={setActivePage} />
         )}
       </div>
