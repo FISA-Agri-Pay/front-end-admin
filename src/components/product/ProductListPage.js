@@ -138,6 +138,19 @@ function ProductListPage({ onCategoriesLoaded = () => {}, onCreate, onEdit }) {
     );
   };
 
+  const getBulkFailureMessage = (results, actionLabel) => {
+    const failedResults = results.filter((result) => result.status === 'rejected');
+
+    if (failedResults.length === 0) {
+      return '';
+    }
+
+    const firstReasonMessage = failedResults[0].reason?.message;
+    const baseMessage = `${failedResults.length}개 상품의 ${actionLabel} 처리에 실패했습니다.`;
+
+    return firstReasonMessage ? `${baseMessage} (${firstReasonMessage})` : baseMessage;
+  };
+
   // 단일 상품 삭제 버튼에서 사용하는 처리이다.
   const handleDelete = async (productPublicId) => {
     if (!window.confirm('선택한 상품을 삭제하시겠습니까?')) {
@@ -163,8 +176,12 @@ function ProductListPage({ onCategoriesLoaded = () => {}, onCreate, onEdit }) {
     }
 
     try {
-      await Promise.all(selectedIds.map((productPublicId) => pauseProduct(productPublicId)));
+      const results = await Promise.allSettled(selectedIds.map((productPublicId) => pauseProduct(productPublicId)));
+      const failureMessage = getBulkFailureMessage(results, '판매 중지');
       await fetchProducts(pageInfo.page);
+      if (failureMessage) {
+        setErrorMessage(failureMessage);
+      }
     } catch (error) {
       setErrorMessage(error.message);
     }
@@ -181,8 +198,12 @@ function ProductListPage({ onCategoriesLoaded = () => {}, onCreate, onEdit }) {
     }
 
     try {
-      await Promise.all(selectedIds.map((productPublicId) => deleteProduct(productPublicId)));
+      const results = await Promise.allSettled(selectedIds.map((productPublicId) => deleteProduct(productPublicId)));
+      const failureMessage = getBulkFailureMessage(results, '삭제');
       await fetchProducts(pageInfo.page);
+      if (failureMessage) {
+        setErrorMessage(failureMessage);
+      }
     } catch (error) {
       setErrorMessage(error.message);
     }
