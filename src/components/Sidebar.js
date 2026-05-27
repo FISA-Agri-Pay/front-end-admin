@@ -15,7 +15,7 @@ function Sidebar({ activePage, onNavigate }) {
           <button
             className={`sidebar__item ${activePage === item.id ? 'sidebar__item--active' : ''}`}
             key={item.id}
-            onClick={() => item.id === 'dashboard' && onNavigate('dashboard')}
+            onClick={() => onNavigate(item.id)}
             type="button"
           >
             {item.label}
@@ -46,7 +46,7 @@ function Sidebar({ activePage, onNavigate }) {
             </button>
           </div>
         )}
-        <button className="sidebar__item" type="button">
+        <button className="sidebar__item" type="button" disabled>
           주문 및 배송 관리
         </button>
       </nav>

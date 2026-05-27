@@ -1,6 +1,7 @@
 const stats = [
   // TODO: 백엔드의 한도 심사 대기 건수로 교체
   {
+    id: 'limit-review',
     label: '한도 심사 대기',
     value: '12',
     unit: '건',
@@ -10,6 +11,7 @@ const stats = [
   },
   // TODO: 백엔드의 당월 외상 결제 총액으로 교체
   {
+    id: 'monthly-payment-total',
     label: '당월 외상 결제 총액',
     value: '45,000,000',
     unit: '원',
@@ -17,6 +19,7 @@ const stats = [
   },
   // TODO: 백엔드의 당월 회수 예정액으로 교체
   {
+    id: 'monthly-collection-expected',
     label: '당월 회수(상환) 예정액',
     value: '15,000,000',
     unit: '원',
@@ -24,6 +27,7 @@ const stats = [
   },
   // TODO: 백엔드의 현재 서비스 연체율로 교체
   {
+    id: 'current-overdue-rate',
     label: '현재 서비스 연체율',
     value: '2.8',
     unit: '%',
@@ -36,7 +40,7 @@ function StatCards() {
   return (
     <section className="stat-grid" aria-label="핵심 지표">
       {stats.map((stat) => (
-        <article className={`stat-card ${stat.variant ? `stat-card--${stat.variant}` : ''}`} key={stat.label}>
+        <article className={`stat-card ${stat.variant ? `stat-card--${stat.variant}` : ''}`} key={stat.id}>
           <div className="stat-card__top">
             <span className="stat-card__icon" aria-hidden="true">
               {getIcon(stat.icon)}
@@ -66,7 +70,7 @@ function getIcon(type) {
     alert: '!',
   };
 
-  return icons[type];
+  return icons[type] || '?';
 }
 
 export default StatCards;

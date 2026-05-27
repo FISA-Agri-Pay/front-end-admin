@@ -35,7 +35,11 @@ function ProductFilters({ filters, onChange, onSearch }) {
           </option>
         ))}
       </select>
+      <label className="visually-hidden" htmlFor="product-search">
+        상품명 또는 상품 번호 검색
+      </label>
       <input
+        id="product-search"
         placeholder="상품명 또는 상품 번호 검색"
         type="search"
         value={filters.keyword}
