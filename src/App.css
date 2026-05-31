@@ -959,7 +959,7 @@ textarea:focus-visible,
 
 .bnpl-summary-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 20px;
 }
 
@@ -1052,7 +1052,7 @@ textarea:focus-visible,
 
 .bnpl-filter {
   display: grid;
-  grid-template-columns: minmax(280px, 340px) 190px minmax(240px, 1fr) 90px auto;
+  grid-template-columns: minmax(300px, 360px) 190px minmax(260px, 390px) 90px minmax(0, 1fr) auto;
   align-items: center;
   gap: 12px;
   padding: 16px 20px;
@@ -1071,10 +1071,22 @@ textarea:focus-visible,
 }
 
 .bnpl-filter__dates {
+  position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto;
   align-items: center;
   gap: 8px;
+  min-height: 40px;
+  border: 1px solid #d7dde4;
+  border-radius: 5px;
+  background: #ffffff;
+  padding: 0 12px;
+}
+
+.bnpl-filter__dates input {
+  min-height: 38px;
+  border: 0;
+  padding: 0;
 }
 
 .bnpl-filter__dates span {
@@ -1082,8 +1094,86 @@ textarea:focus-visible,
   font-weight: 800;
 }
 
+.bnpl-filter__calendar {
+  display: grid;
+  width: 26px;
+  height: 26px;
+  place-items: center;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: #596574;
+  cursor: pointer;
+  padding: 0;
+}
+
+.bnpl-filter__calendar span {
+  position: relative;
+  width: 15px;
+  height: 16px;
+  border: 2px solid currentColor;
+  border-radius: 3px;
+}
+
+.bnpl-filter__calendar span::before,
+.bnpl-filter__calendar span::after {
+  content: '';
+  position: absolute;
+  background: currentColor;
+}
+
+.bnpl-filter__calendar span::before {
+  left: -2px;
+  right: -2px;
+  top: 3px;
+  height: 2px;
+}
+
+.bnpl-filter__calendar span::after {
+  left: 3px;
+  top: -5px;
+  width: 7px;
+  height: 5px;
+  border-radius: 2px 2px 0 0;
+}
+
+.bnpl-filter__calendar-popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: 56px minmax(150px, 1fr);
+  align-items: center;
+  gap: 10px 12px;
+  width: min(360px, 90vw);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: #ffffff;
+  box-shadow: 0 10px 24px rgba(31, 37, 45, 0.13);
+  padding: 14px;
+}
+
+.bnpl-filter__calendar-popover label {
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.bnpl-filter__calendar-popover input {
+  border: 1px solid #d7dde4;
+  padding: 0 10px;
+}
+
+.bnpl-filter__calendar-popover button {
+  grid-column: 2;
+  justify-self: end;
+  min-height: 34px;
+}
+
 .bnpl-filter__export {
   justify-self: end;
+  grid-column: 6;
 }
 
 .bnpl-page__message {
@@ -1102,12 +1192,12 @@ textarea:focus-visible,
 }
 
 .bnpl-table {
-  min-width: 1160px;
+  min-width: 1060px;
 }
 
 .bnpl-table__row {
   display: grid;
-  grid-template-columns: 130px 150px 145px 145px 145px 145px 130px 140px;
+  grid-template-columns: 130px 170px 150px 160px 160px 140px 150px;
   align-items: center;
   min-height: 66px;
   gap: 0;
@@ -1222,6 +1312,7 @@ textarea:focus-visible,
 
   .bnpl-filter__export {
     justify-self: stretch;
+    grid-column: auto;
   }
 
   .bnpl-table-card {

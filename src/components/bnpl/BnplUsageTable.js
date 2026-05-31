@@ -41,7 +41,6 @@ function BnplUsageTable({
           <span role="columnheader">연락처</span>
           <span role="columnheader">총 한도</span>
           <span role="columnheader">사용 금액</span>
-          <span role="columnheader">연체 금액</span>
           <span role="columnheader">상환 만기일</span>
           <span role="columnheader">상태</span>
           <span role="columnheader">관리</span>
@@ -62,9 +61,6 @@ function BnplUsageTable({
               <span role="cell">{formatCurrency(user.creditLimit)}</span>
               <span className={isOverdue ? 'bnpl-table__emphasis' : ''} role="cell">
                 {formatCurrency(user.usedAmount)}
-              </span>
-              <span className={isOverdue ? 'bnpl-table__emphasis' : ''} role="cell">
-                {formatCurrency(user.overdueAmount)}
               </span>
               <span className={isOverdue ? 'bnpl-table__emphasis' : ''} role="cell">
                 {formatDate(user.nextRepaymentDate)}

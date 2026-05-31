@@ -1,5 +1,4 @@
 const formatCurrency = (value) => `${Number(value || 0).toLocaleString('ko-KR')} 원`;
-const formatCount = (value) => `${Number(value || 0).toLocaleString('ko-KR')} 건`;
 
 function BnplSummaryCards({ summary }) {
   const cards = [
@@ -24,13 +23,6 @@ function BnplSummaryCards({ summary }) {
       value: formatCurrency(summary?.overdueAmount),
       rate: `${Number(summary?.overdueRate || 0).toFixed(1)}%`,
       variant: summary?.isOverdueAlert ? 'danger' : 'green',
-    },
-    {
-      id: 'count',
-      icon: '건',
-      label: 'BNPL 이용 건수',
-      value: formatCount(summary?.totalUsageCount),
-      variant: 'plain',
     },
   ];
 
