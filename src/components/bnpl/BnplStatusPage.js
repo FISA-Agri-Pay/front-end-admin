@@ -74,12 +74,14 @@ function BnplStatusPage() {
         page,
         size: PAGE_SIZE,
       });
+      const nextUsers = data?.users ?? [];
+      const pagination = data?.pagination ?? {};
 
-      setUsers(data.users || []);
+      setUsers(nextUsers);
       setPageInfo({
-        currentPage: data.pagination?.currentPage || page,
-        totalPages: data.pagination?.totalPages || 1,
-        totalCount: data.pagination?.totalCount || 0,
+        currentPage: pagination.currentPage || page,
+        totalPages: pagination.totalPages || 1,
+        totalCount: pagination.totalCount || 0,
       });
     } catch (error) {
       setUsers([]);
