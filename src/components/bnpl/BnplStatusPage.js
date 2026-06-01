@@ -125,8 +125,13 @@ function BnplStatusPage() {
       const link = document.createElement('a');
       link.href = url;
       link.download = fileName;
+      link.style.display = 'none';
+      document.body.appendChild(link);
       link.click();
-      URL.revokeObjectURL(url);
+      setTimeout(() => {
+        URL.revokeObjectURL(url);
+        link.remove();
+      }, 0);
     } catch (error) {
       setErrorMessage(error.message);
     } finally {
