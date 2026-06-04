@@ -45,40 +45,48 @@ export const loginAdmin = async ({ email, password, rememberMe }) => {
 };
 
 export const saveAdminSession = (session, rememberMe) => {
-  const targetStorage = rememberMe ? localStorage : sessionStorage;
-  const staleStorage = rememberMe ? sessionStorage : localStorage;
-  const values = {
-    adminAccessToken: session.adminAccessToken,
-    refreshToken: session.refreshToken,
-    adminId: session.adminId,
-    adminName: session.name,
-    adminRole: session.role,
-  };
+  try {
+    const targetStorage = rememberMe ? localStorage : sessionStorage;
+    const staleStorage = rememberMe ? sessionStorage : localStorage;
+    const values = {
+      adminAccessToken: session.adminAccessToken,
+      refreshToken: session.refreshToken,
+      adminId: session.adminId,
+      adminName: session.name,
+      adminRole: session.role,
+    };
 
-  STORAGE_KEYS.forEach((key) => {
-    staleStorage.removeItem(key);
-  });
+    STORAGE_KEYS.forEach((key) => {
+      staleStorage.removeItem(key);
+    });
 
-  Object.entries(values).forEach(([key, value]) => {
-    if (value) {
-      targetStorage.setItem(key, value);
-    }
-  });
+    Object.entries(values).forEach(([key, value]) => {
+      if (value) {
+        targetStorage.setItem(key, value);
+      }
+    });
+  } catch (error) {
+    // Storage may be unavailable in private or restricted browser contexts.
+  }
 };
 
 export const getStoredAdminSession = () => {
-  const storage = localStorage.getItem('adminAccessToken') ? localStorage : sessionStorage;
-  const adminAccessToken = storage.getItem('adminAccessToken');
+  try {
+    const storage = localStorage.getItem('adminAccessToken') ? localStorage : sessionStorage;
+    const adminAccessToken = storage.getItem('adminAccessToken');
 
-  if (!adminAccessToken) {
+    if (!adminAccessToken) {
+      return null;
+    }
+
+    return {
+      adminAccessToken,
+      refreshToken: storage.getItem('refreshToken') || '',
+      adminId: storage.getItem('adminId') || '',
+      name: storage.getItem('adminName') || '',
+      role: storage.getItem('adminRole') || '',
+    };
+  } catch (error) {
     return null;
   }
-
-  return {
-    adminAccessToken,
-    refreshToken: storage.getItem('refreshToken') || '',
-    adminId: storage.getItem('adminId') || '',
-    name: storage.getItem('adminName') || '',
-    role: storage.getItem('adminRole') || '',
-  };
 };
