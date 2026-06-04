@@ -115,7 +115,11 @@ function LoginPage({ onLoginSuccess }) {
             />
             <span>로그인 상태 유지</span>
           </label>
-          {errorMessage && <p className="login-form__message login-form__message--error">{errorMessage}</p>}
+          {errorMessage && (
+            <p className="login-form__message login-form__message--error" role="alert" aria-atomic="true">
+              {errorMessage}
+            </p>
+          )}
           <button className="button button--primary login-form__submit" disabled={isSubmitting} type="submit">
             {isSubmitting ? '로그인 중' : '로그인'}
           </button>
