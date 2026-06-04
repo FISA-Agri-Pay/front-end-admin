@@ -1,5 +1,7 @@
 import './App.css';
 import { useState } from 'react';
+import LoginPage from './components/auth/LoginPage';
+import { getStoredAdminSession } from './components/auth/authApi';
 import BnplStatusPage from './components/bnpl/BnplStatusPage';
 import Dashboard from './components/Dashboard';
 import ProductManagement from './components/product/ProductManagement';
@@ -7,6 +9,7 @@ import Sidebar from './components/Sidebar';
 import TopBar from './components/TopBar';
 
 const topbarTitles = {
+  login: '관리자 로그인',
   dashboard: '대시보드',
   usageStatus: '외상(BNPL) 이용 및 연체 현황',
   productList: '',
@@ -15,17 +18,29 @@ const topbarTitles = {
 };
 
 function App() {
-  const [activePage, setActivePage] = useState('dashboard');
+  const [adminSession, setAdminSession] = useState(() => getStoredAdminSession());
+  const [activePage, setActivePage] = useState(() => (getStoredAdminSession() ? 'dashboard' : 'login'));
+  const isAuthenticated = Boolean(adminSession?.adminAccessToken);
+
+  const handleNavigate = (page) => {
+    setActivePage(isAuthenticated ? page : 'login');
+  };
+
+  const handleLoginSuccess = (session) => {
+    setAdminSession(session);
+    setActivePage('dashboard');
+  };
 
   return (
     <div className="admin-app">
-      <Sidebar activePage={activePage} onNavigate={setActivePage} />
+      <Sidebar activePage={activePage} onNavigate={handleNavigate} />
       <div className="admin-shell">
         <TopBar title={topbarTitles[activePage]} />
+        {activePage === 'login' && <LoginPage onLoginSuccess={handleLoginSuccess} />}
         {activePage === 'dashboard' && <Dashboard />}
         {activePage === 'usageStatus' && <BnplStatusPage />}
         {(activePage === 'productList' || activePage === 'productCreate' || activePage === 'productEdit') && (
-          <ProductManagement activePage={activePage} onNavigate={setActivePage} />
+          <ProductManagement activePage={activePage} onNavigate={handleNavigate} />
         )}
       </div>
     </div>
