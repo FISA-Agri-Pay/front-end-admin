@@ -46,7 +46,11 @@ function Sidebar({ activePage, onNavigate }) {
             </button>
           </div>
         )}
-        <button className="sidebar__item" type="button" disabled>
+        <button
+          className={`sidebar__item ${activePage === 'orderDelivery' ? 'sidebar__item--active' : ''}`}
+          onClick={() => onNavigate('orderDelivery')}
+          type="button"
+        >
           주문 및 배송 관리
         </button>
       </nav>
