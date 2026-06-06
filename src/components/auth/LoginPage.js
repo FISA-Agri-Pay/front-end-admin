@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { saveAdminSession } from './authApi';
+import { loginAdmin, saveAdminSession } from './authApi';
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -44,14 +44,11 @@ function LoginPage({ onLoginSuccess }) {
     setErrorMessage('');
 
     try {
-      const session = {
-        adminAccessToken: 'mock-admin-access-token',
-        refreshToken: 'mock-refresh-token',
-        adminId: 'mock-admin',
-        name: '관리자',
-        role: 'SUPER_ADMIN',
-      };
-
+      const session = await loginAdmin({
+        email: formData.email.trim(),
+        password: formData.password,
+        rememberMe: formData.rememberMe,
+      });
       saveAdminSession(session, formData.rememberMe);
       onLoginSuccess(session);
     } catch (error) {

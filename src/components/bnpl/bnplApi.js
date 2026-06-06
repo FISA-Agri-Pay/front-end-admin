@@ -1,5 +1,10 @@
-const API_ORIGIN = (process.env.REACT_APP_ADMIN_API_BASE_URL || 'http://localhost:8080').replace(/\/$/, '');
-const ADMIN_API_BASE_URL = API_ORIGIN.endsWith('/api/v1/admin') ? API_ORIGIN : `${API_ORIGIN}/api/v1/admin`;
+import {
+  ADMIN_API_BASE_URL,
+  buildAdminHeaders,
+  getAdminErrorMessage,
+  parseJsonResponse,
+  requestAdminApi,
+} from '../../api/adminApi';
 
 export const BNPL_STATUSES = [
   { value: 'ALL', label: '상태: 전체' },
@@ -17,53 +22,8 @@ export const BNPL_STATUS_LABELS = BNPL_STATUSES.reduce(
   {}
 );
 
-const getStoredToken = () => {
-  try {
-    return localStorage.getItem('adminAccessToken') || sessionStorage.getItem('adminAccessToken') || '';
-  } catch (error) {
-    return '';
-  }
-};
-
-const buildHeaders = (headers = {}) => {
-  const token = getStoredToken();
-  return {
-    ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    ...headers,
-  };
-};
-
-const getErrorMessage = (body, fallbackMessage, response) => {
-  if (body?.error?.message || body?.message) {
-    return body?.error?.message || body?.message;
-  }
-  if (response?.status === 401) {
-    return '로그인이 만료되었습니다. 다시 로그인해 주세요.';
-  }
-  if (response?.status === 403) {
-    return '해당 관리자 기능에 접근할 권한이 없습니다.';
-  }
-  return fallbackMessage;
-};
-
-const requestBnplApi = async (path, options = {}, fallbackMessage = '요청 처리에 실패했습니다.') => {
-  const response = await fetch(`${ADMIN_API_BASE_URL}${path}`, {
-    ...options,
-    headers: buildHeaders(options.headers),
-  });
-  const contentType = response.headers.get('content-type') || '';
-  const body = contentType.includes('application/json') ? await response.json() : null;
-
-  if (!response.ok) {
-    throw new Error(getErrorMessage(body, fallbackMessage, response));
-  }
-
-  if (body && body.success !== true) {
-    throw new Error(getErrorMessage(body, fallbackMessage, response));
-  }
-
-  return body?.data ?? null;
-};
+const requestBnplApi = (path, options = {}, fallbackMessage = '요청 처리에 실패했습니다.') =>
+  requestAdminApi(path, options, fallbackMessage);
 
 const buildQueryString = (params) => {
   const searchParams = new URLSearchParams();
@@ -113,13 +73,12 @@ export const downloadBnplUsersExcel = async ({ startDate, endDate, search, statu
   });
 
   const response = await fetch(`${ADMIN_API_BASE_URL}/bnpl/users/export?${queryString}`, {
-    headers: buildHeaders(),
+    headers: buildAdminHeaders(),
   });
 
   if (!response.ok) {
-    const contentType = response.headers.get('content-type') || '';
-    const body = contentType.includes('application/json') ? await response.json() : null;
-    throw new Error(getErrorMessage(body, '엑셀 다운로드에 실패했습니다.', response));
+    const body = await parseJsonResponse(response);
+    throw new Error(getAdminErrorMessage(body, '엑셀 다운로드에 실패했습니다.', response));
   }
 
   return {

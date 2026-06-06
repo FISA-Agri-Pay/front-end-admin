@@ -1,4 +1,6 @@
-export const API_BASE_URL = process.env.REACT_APP_ADMIN_API_BASE_URL || 'http://localhost:8080';
+import { API_ORIGIN, requestAdminApi } from '../../api/adminApi';
+
+export const API_BASE_URL = API_ORIGIN;
 
 // 백엔드에 카테고리 목록 API가 없을 때 화면에 먼저 보여줄 기본 카테고리 목록
 export const PRODUCT_CATEGORIES = [
@@ -10,39 +12,13 @@ export const PRODUCT_CATEGORIES = [
 // 관리자 상품에서 사용하는 판매 상태 목록
 export const PRODUCT_STATUSES = [
   { value: 'ON_SALE', label: '판매 중' },
+  { value: 'SOLD_OUT', label: '품절' },
   { value: 'HIDDEN', label: '판매 중지' },
 ];
 
-// 공통 ApiResponse 포맷이 성공인지 판단하는 함수
-const isSuccessResponse = (body) => body?.success === true || body?.status === 'SUCCESS';
-
-// 백엔드 에러 응답에서 사용자에게 보여줄 메시지를 추출하는 함수
-const getErrorMessage = (body, fallbackMessage, response) => {
-  if (body?.error?.message || body?.message) {
-    return body?.error?.message || body?.message;
-  }
-  if (response?.status === 403 || response?.status === 405) {
-    return `${fallbackMessage} 백엔드 서버를 재시작해 새 업로드 API가 반영됐는지 확인해 주세요.`;
-  }
-  return fallbackMessage;
-};
-
 // 관리자 API 호출과 공통 에러 처리를 담당하는 함수
-export const requestApi = async (path, options = {}, fallbackMessage = '요청 처리에 실패했습니다.') => {
-  const response = await fetch(`${API_BASE_URL}${path}`, options);
-  const contentType = response.headers.get('content-type') || '';
-  const body = contentType.includes('application/json') ? await response.json() : null;
-
-  if (!response.ok) {
-    throw new Error(getErrorMessage(body, fallbackMessage, response));
-  }
-
-  if (body && !isSuccessResponse(body)) {
-    throw new Error(getErrorMessage(body, fallbackMessage, response));
-  }
-
-  return body?.data ?? null;
-};
+export const requestApi = (path, options = {}, fallbackMessage = '요청 처리에 실패했습니다.') =>
+  requestAdminApi(path, options, fallbackMessage);
 
 // 상품 목록 응답에 포함된 실제 카테고리 ID로 화면의 카테고리 옵션을 갱신하는 함수
 export const mergeCategoriesFromProducts = (currentCategories, products = []) => {

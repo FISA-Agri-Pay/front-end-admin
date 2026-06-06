@@ -4,6 +4,7 @@ import LoginPage from './components/auth/LoginPage';
 import { getStoredAdminSession } from './components/auth/authApi';
 import BnplStatusPage from './components/bnpl/BnplStatusPage';
 import Dashboard from './components/Dashboard';
+import OrderDeliveryPage from './components/order/OrderDeliveryPage';
 import ProductManagement from './components/product/ProductManagement';
 import Sidebar from './components/Sidebar';
 import TopBar from './components/TopBar';
@@ -15,6 +16,7 @@ const topbarTitles = {
   productList: '',
   productCreate: '',
   productEdit: '',
+  orderDelivery: '주문 및 배송 관리',
 };
 
 function App() {
@@ -42,6 +44,7 @@ function App() {
         {(activePage === 'productList' || activePage === 'productCreate' || activePage === 'productEdit') && (
           <ProductManagement activePage={activePage} onNavigate={handleNavigate} />
         )}
+        {activePage === 'orderDelivery' && <OrderDeliveryPage />}
       </div>
     </div>
   );
