@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        nodejs 'frontend-admin-nodejs'
+    }
+
     stages {
         stage('Checkout') {
             steps {
