@@ -12,6 +12,7 @@ const statusLabels = PRODUCT_STATUSES.reduce(
 // 상태 코드별 배지 색상 클래스 이름
 const statusTones = {
   ON_SALE: 'green',
+  SOLD_OUT: 'orange',
   HIDDEN: 'gray',
 };
 

@@ -1,5 +1,4 @@
-const API_ORIGIN = (process.env.REACT_APP_ADMIN_API_BASE_URL || 'http://localhost:8080').replace(/\/$/, '');
-const ADMIN_API_BASE_URL = API_ORIGIN.endsWith('/api/v1/admin') ? API_ORIGIN : `${API_ORIGIN}/api/v1/admin`;
+import { ADMIN_API_BASE_URL, isSuccessResponse, parseJsonResponse } from '../../api/adminApi';
 
 const AUTH_ERROR_MESSAGES = {
   AUTH_4001: '이메일 또는 비밀번호를 확인해주세요',
@@ -22,6 +21,18 @@ const getLoginErrorMessage = (body, fallbackMessage) => {
   return body?.error?.message || body?.message || fallbackMessage;
 };
 
+export const normalizeAdminSession = (session = {}) => {
+  const admin = session.admin || session.user || {};
+
+  return {
+    adminAccessToken: session.adminAccessToken || session.accessToken || session.token || '',
+    refreshToken: session.refreshToken || '',
+    adminId: session.adminId || admin.adminId || admin.id || session.id || '',
+    name: session.name || session.adminName || admin.name || admin.adminName || '',
+    role: session.role || session.adminRole || admin.role || admin.adminRole || '',
+  };
+};
+
 export const loginAdmin = async ({ email, password, rememberMe }) => {
   const response = await fetch(`${ADMIN_API_BASE_URL}/auth/login`, {
     method: 'POST',
@@ -34,14 +45,13 @@ export const loginAdmin = async ({ email, password, rememberMe }) => {
       rememberMe,
     }),
   });
-  const contentType = response.headers.get('content-type') || '';
-  const body = contentType.includes('application/json') ? await response.json() : null;
+  const body = await parseJsonResponse(response);
 
-  if (!response.ok || body?.success !== true) {
+  if (!response.ok || !isSuccessResponse(body)) {
     throw new Error(getLoginErrorMessage(body, '로그인에 실패했습니다.'));
   }
 
-  return body?.data ?? null;
+  return normalizeAdminSession(body?.data);
 };
 
 export const saveAdminSession = (session, rememberMe) => {

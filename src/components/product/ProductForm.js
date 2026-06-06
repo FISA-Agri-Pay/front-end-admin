@@ -66,7 +66,7 @@ function ProductForm({
             <label htmlFor="status">
               판매 상태 <span>*</span>
             </label>
-            {/* 현재 상품 상태는 판매 중과 판매 중지만 사용한다. */}
+            {/* 백엔드 ProductStatus enum 값으로 상품 상태를 저장한다. */}
             <select id="status" name="status" value={formData.status} onChange={onChange} required>
               {PRODUCT_STATUSES.map((status) => (
                 <option key={status.value} value={status.value}>
