@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 const recommendedPrompts = [
   { tone: 'green', label: '심사 대기 12건 요약해줘' },
@@ -21,6 +21,7 @@ const cannedResponses = {
 };
 
 function AdminCopilot() {
+  const messageIdRef = useRef(2);
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [inputValue, setInputValue] = useState('');
@@ -55,13 +56,13 @@ function AdminCopilot() {
     setMessages((currentMessages) => [
       ...currentMessages,
       {
-        id: Date.now(),
+        id: messageIdRef.current++,
         role: 'user',
         text: trimmedText,
         time: '방금',
       },
       {
-        id: Date.now() + 1,
+        id: messageIdRef.current++,
         role: 'assistant',
         text: responseText,
         time: '방금',

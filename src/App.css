@@ -1282,7 +1282,7 @@ textarea:focus-visible,
   position: relative;
   width: 15px;
   height: 16px;
-  border: 2px solid currentColor;
+  border: 2px solid currentcolor;
   border-radius: 3px;
 }
 
@@ -1290,7 +1290,7 @@ textarea:focus-visible,
 .bnpl-filter__calendar span::after {
   content: '';
   position: absolute;
-  background: currentColor;
+  background: currentcolor;
 }
 
 .bnpl-filter__calendar span::before {
@@ -1649,7 +1649,7 @@ textarea:focus-visible,
   position: relative;
   width: 28px;
   height: 22px;
-  border: 3px solid currentColor;
+  border: 3px solid currentcolor;
   border-radius: 7px;
 }
 
@@ -1661,7 +1661,7 @@ textarea:focus-visible,
   width: 3px;
   height: 8px;
   border-radius: 999px;
-  background: currentColor;
+  background: currentcolor;
   transform: translateX(-50%);
 }
 
@@ -1673,7 +1673,7 @@ textarea:focus-visible,
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: currentColor;
+  background: currentcolor;
   transform: translateX(-50%);
 }
 
@@ -1685,7 +1685,7 @@ textarea:focus-visible,
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: currentColor;
+  background: currentcolor;
 }
 
 .copilot-launcher__bot span::before {
@@ -1797,11 +1797,11 @@ textarea:focus-visible,
   top: 8px;
   height: 2px;
   border-radius: 999px;
-  background: currentColor;
+  background: currentcolor;
 }
 
 .copilot-icon-button--expand span {
-  border: 2px solid currentColor;
+  border: 2px solid currentcolor;
   border-radius: 2px;
 }
 
@@ -1826,7 +1826,7 @@ textarea:focus-visible,
   width: 2px;
   height: 15px;
   border-radius: 999px;
-  background: currentColor;
+  background: currentcolor;
 }
 
 .copilot-icon-button--close span::before {
@@ -1940,13 +1940,13 @@ textarea:focus-visible,
 .copilot-prompt__mark::after {
   content: '';
   position: absolute;
-  background: currentColor;
+  background: currentcolor;
 }
 
 .copilot-prompt__mark::before {
   width: 10px;
   height: 12px;
-  border: 2px solid currentColor;
+  border: 2px solid currentcolor;
   border-radius: 3px;
   background: transparent;
 }
@@ -2107,7 +2107,7 @@ textarea:focus-visible,
 .copilot-composer button span::after {
   content: '';
   position: absolute;
-  background: currentColor;
+  background: currentcolor;
 }
 
 .copilot-composer button span::before {
@@ -2123,8 +2123,8 @@ textarea:focus-visible,
   top: 4px;
   width: 8px;
   height: 8px;
-  border-top: 2px solid currentColor;
-  border-right: 2px solid currentColor;
+  border-top: 2px solid currentcolor;
+  border-right: 2px solid currentcolor;
   background: transparent;
   transform: rotate(45deg);
 }
