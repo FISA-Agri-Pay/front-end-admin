@@ -3,6 +3,7 @@ import { useState } from 'react';
 import LoginPage from './components/auth/LoginPage';
 import { getStoredAdminSession } from './components/auth/authApi';
 import BnplStatusPage from './components/bnpl/BnplStatusPage';
+import AdminCopilot from './components/copilot/AdminCopilot';
 import Dashboard from './components/Dashboard';
 import OrderDeliveryPage from './components/order/OrderDeliveryPage';
 import ProductManagement from './components/product/ProductManagement';
@@ -45,6 +46,7 @@ function App() {
           <ProductManagement activePage={activePage} onNavigate={handleNavigate} />
         )}
         {activePage === 'orderDelivery' && <OrderDeliveryPage />}
+        {activePage === 'dashboard' && <AdminCopilot />}
       </div>
     </div>
   );
