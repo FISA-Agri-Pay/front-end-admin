@@ -27,7 +27,7 @@ export const normalizeAdminSession = (session = {}) => {
   return {
     adminAccessToken: session.adminAccessToken || session.accessToken || session.token || '',
     refreshToken: session.refreshToken || '',
-    adminId: session.adminId || admin.adminId || admin.id || session.id || '',
+    adminId: session.adminId || admin.publicId || admin.adminId || admin.id || session.id || '',
     name: session.name || session.adminName || admin.name || admin.adminName || '',
     role: session.role || session.adminRole || admin.role || admin.adminRole || '',
   };
