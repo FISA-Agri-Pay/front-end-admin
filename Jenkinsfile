@@ -51,7 +51,12 @@ pipeline {
 
         stage('Deploy to S3') {
             steps {
-                withCredentials([usernamePassword(credentialsId: env.AWS_CREDENTIALS_ID, usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: env.AWS_CREDENTIALS_ID,
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+                ]]) {
                     sh '''
                         DEPLOY_PREFIX="${ADMIN_FRONTEND_S3_PREFIX%/}"
                         aws s3 sync build/ "s3://$ADMIN_FRONTEND_S3_BUCKET/$DEPLOY_PREFIX/" --delete
