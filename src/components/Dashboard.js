@@ -5,7 +5,7 @@ import RevenueChart from './dashboard/RevenueChart';
 import StatCards from './dashboard/StatCards';
 import { fetchDashboardSummary } from './dashboard/dashboardApi';
 
-function Dashboard() {
+function Dashboard({ onNavigate }) {
   const [summary, setSummary] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -52,7 +52,7 @@ function Dashboard() {
       <StatCards summary={summary} isLoading={isLoading} />
       <RevenueChart data={summary?.recentSevenDaysBnplUsage ?? []} isLoading={isLoading} />
       <section className="dashboard__grid" aria-label="관리자 요약 정보">
-        <ActionTasks actionRequired={summary?.actionRequired} isLoading={isLoading} />
+        <ActionTasks actionRequired={summary?.actionRequired} isLoading={isLoading} onNavigate={onNavigate} />
         <RecentOrders orders={summary?.recentBnplOrders ?? []} isLoading={isLoading} />
       </section>
     </main>
