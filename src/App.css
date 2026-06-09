@@ -159,6 +159,24 @@ textarea:focus-visible,
   padding: 31px 30px 38px;
 }
 
+.dashboard__message,
+.dashboard-panel__message {
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #ffffff;
+  color: var(--text-secondary);
+  padding: 13px 16px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.dashboard__message--error {
+  border-color: var(--red);
+  background: var(--red-soft);
+  color: var(--red);
+}
+
 .stat-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -255,6 +273,15 @@ textarea:focus-visible,
 
 .chart-panel {
   padding: 16px 30px 22px;
+}
+
+.dashboard-panel__message {
+  margin-top: 18px;
+  min-height: 220px;
+  display: grid;
+  place-items: center;
+  background: #f8fafc;
+  text-align: center;
 }
 
 .chart {
@@ -383,6 +410,10 @@ textarea:focus-visible,
   border-bottom: 1px solid var(--border-soft);
 }
 
+.task-list__item--empty {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .task-list__item:last-child {
   border-bottom: 0;
 }
@@ -452,6 +483,15 @@ textarea:focus-visible,
 .orders-table__row strong {
   justify-self: end;
   font-size: 14px;
+}
+
+.orders-table__empty {
+  display: grid;
+  min-height: 180px;
+  place-items: center;
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 700;
 }
 
 .button {

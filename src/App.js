@@ -42,7 +42,7 @@ function App() {
       <div className="admin-shell">
         <TopBar title={topbarTitles[activePage]} />
         {activePage === 'login' && <LoginPage onLoginSuccess={handleLoginSuccess} />}
-        {activePage === 'dashboard' && <Dashboard />}
+        {activePage === 'dashboard' && <Dashboard onNavigate={handleNavigate} />}
         {activePage === 'limitReview' && <LimitReviewDetailPage />}
         {activePage === 'usageStatus' && <BnplStatusPage />}
         {(activePage === 'productList' || activePage === 'productCreate' || activePage === 'productEdit') && (
