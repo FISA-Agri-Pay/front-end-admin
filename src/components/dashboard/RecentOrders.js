@@ -1,13 +1,20 @@
-const orders = [
-  // TODO: 백엔드의 최근 접수 외상 주문 상위 5건으로 교체
-  { time: '14:02', customer: '김농부', product: '드론 방제 서비스 외 1건', amount: '1,500,000원' },
-  { time: '13:45', customer: '이청년', product: '맞춤형 복합 비료 20kg 20포...', amount: '300,000원' },
-  { time: '11:20', customer: '박과수', product: '청양고추 모종 100구', amount: '25,000원' },
-  { time: '10:05', customer: '최이장', product: '트랙터 로터리 작업(1일)', amount: '300,000원' },
-  { time: '09:30', customer: '정청년', product: '친환경 유기농 퇴비 10kg', amount: '12,000원' },
-];
+const formatTime = (value) => {
+  if (!value) {
+    return '-';
+  }
 
-function RecentOrders() {
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return '-';
+  }
+
+  return `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+};
+
+const formatAmount = (amount) => `${Number(amount ?? 0).toLocaleString('ko-KR')}원`;
+
+function RecentOrders({ orders = [], isLoading }) {
   return (
     <section className="panel orders-panel">
       <div className="panel__heading-row">
@@ -23,14 +30,17 @@ function RecentOrders() {
           <span role="columnheader">상품명</span>
           <span role="columnheader">금액</span>
         </div>
-        {orders.map((order, index) => (
-          <div className="orders-table__row" role="row" key={`${order.time}-${order.customer}-${index}`}>
-            <span role="cell">{order.time}</span>
-            <span role="cell">{order.customer}</span>
-            <span role="cell">{order.product}</span>
-            <strong role="cell">{order.amount}</strong>
-          </div>
-        ))}
+        {isLoading && <div className="orders-table__empty" role="row">주문 정보를 불러오는 중입니다.</div>}
+        {!isLoading && orders.length === 0 && <div className="orders-table__empty" role="row">최근 외상 주문이 없습니다.</div>}
+        {!isLoading &&
+          orders.map((order, index) => (
+            <div className="orders-table__row" role="row" key={order.orderPublicId || `${order.orderedAt}-${index}`}>
+              <span role="cell">{formatTime(order.orderedAt)}</span>
+              <span role="cell">{order.userName || '-'}</span>
+              <span role="cell">{order.orderDisplayName || order.firstProductName || '-'}</span>
+              <strong role="cell">{formatAmount(order.amount)}</strong>
+            </div>
+          ))}
       </div>
     </section>
   );

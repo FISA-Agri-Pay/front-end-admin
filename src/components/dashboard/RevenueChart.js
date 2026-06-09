@@ -1,45 +1,70 @@
-const chartData = [
-  // TODO: 백엔드의 최근 7일 외상 이용 금액 데이터로 교체
-  { date: '5/5', amount: 150, label: '150만' },
-  { date: '5/6', amount: 225, label: '225만' },
-  { date: '5/7', amount: 125, label: '125만' },
-  { date: '5/8', amount: 375, label: '375만' },
-  { date: '5/9', amount: 275, label: '275만' },
-  { date: '5/10', amount: 75, label: '75만' },
-  { date: '5/11', amount: 320, label: '320만', highlight: true },
-];
+const toNumber = (value) => Number(value ?? 0);
 
-function RevenueChart() {
+const formatDateLabel = (value) => {
+  if (!value) {
+    return '-';
+  }
+
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return value;
+  }
+
+  return `${date.getMonth() + 1}/${date.getDate()}`;
+};
+
+const formatAmountLabel = (amount) => {
+  const amountInTenThousand = Math.round(toNumber(amount) / 10000);
+
+  if (amountInTenThousand >= 10000) {
+    return `${Math.round(amountInTenThousand / 10000).toLocaleString('ko-KR')}억`;
+  }
+
+  return `${amountInTenThousand.toLocaleString('ko-KR')}만`;
+};
+
+function RevenueChart({ data = [], isLoading }) {
+  const chartData = data.map((item, index) => ({
+    date: formatDateLabel(item.date),
+    amount: toNumber(item.amount),
+    label: formatAmountLabel(item.amount),
+    highlight: index === data.length - 1,
+  }));
   const maxAmount = Math.max(...chartData.map((item) => item.amount), 1);
 
   return (
     <section className="panel chart-panel">
       <h3 className="panel__title">최근 7일 외상 이용 추이</h3>
-      <div className="chart" aria-label="최근 7일 외상 이용 추이 차트">
-        <div className="chart__scale" aria-hidden="true">
-          <span>{maxAmount}만</span>
-          <span>{Math.round(maxAmount * 0.75)}만</span>
-          <span>{Math.round(maxAmount * 0.5)}만</span>
-          <span>{Math.round(maxAmount * 0.25)}만</span>
-          <span>0</span>
-        </div>
-        <div className="chart__plot">
-          <div className="chart__grid" aria-hidden="true" />
-          <div className="chart__bars">
-            {chartData.map((item) => (
-              <div className="chart__bar-group" key={item.date}>
-                {item.highlight && <strong className="chart__value">{item.label}</strong>}
-                <div
-                  className={`chart__bar ${item.highlight ? 'chart__bar--highlight' : ''}`}
-                  style={{ height: `${(item.amount / maxAmount) * 100}%` }}
-                  title={`${item.date} ${item.label}`}
-                />
-                <span className={item.highlight ? 'chart__date chart__date--highlight' : 'chart__date'}>{item.date}</span>
-              </div>
-            ))}
+      {isLoading && <p className="dashboard-panel__message">차트 데이터를 불러오는 중입니다.</p>}
+      {!isLoading && chartData.length === 0 && <p className="dashboard-panel__message">표시할 이용 추이가 없습니다.</p>}
+      {!isLoading && chartData.length > 0 && (
+        <div className="chart" aria-label="최근 7일 외상 이용 추이 차트">
+          <div className="chart__scale" aria-hidden="true">
+            <span>{formatAmountLabel(maxAmount)}</span>
+            <span>{formatAmountLabel(maxAmount * 0.75)}</span>
+            <span>{formatAmountLabel(maxAmount * 0.5)}</span>
+            <span>{formatAmountLabel(maxAmount * 0.25)}</span>
+            <span>0</span>
+          </div>
+          <div className="chart__plot">
+            <div className="chart__grid" aria-hidden="true" />
+            <div className="chart__bars">
+              {chartData.map((item) => (
+                <div className="chart__bar-group" key={item.date}>
+                  {item.highlight && <strong className="chart__value">{item.label}</strong>}
+                  <div
+                    className={`chart__bar ${item.highlight ? 'chart__bar--highlight' : ''}`}
+                    style={{ height: `${(item.amount / maxAmount) * 100}%` }}
+                    title={`${item.date} ${item.label}`}
+                  />
+                  <span className={item.highlight ? 'chart__date chart__date--highlight' : 'chart__date'}>{item.date}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </section>
   );
 }
