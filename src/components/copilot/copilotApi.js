@@ -4,8 +4,19 @@ import { getStoredAdminSession } from '../auth/authApi';
 const isLocalBrowser =
   typeof window !== 'undefined' && ['localhost', '127.0.0.1'].includes(window.location.hostname);
 
-const configuredAiopsBaseUrl =
-  process.env.REACT_APP_AIOPS_API_BASE_URL || (isLocalBrowser ? 'http://localhost:8000' : '');
+const getDefaultAiopsBaseUrl = () => {
+  if (isLocalBrowser) {
+    return 'http://localhost:8000';
+  }
+
+  if (typeof window !== 'undefined' && window.location.origin) {
+    return `${window.location.origin}/api/v1/admin`;
+  }
+
+  return '';
+};
+
+const configuredAiopsBaseUrl = process.env.REACT_APP_AIOPS_API_BASE_URL || getDefaultAiopsBaseUrl();
 
 export const AIOPS_API_BASE_URL = configuredAiopsBaseUrl.replace(/\/$/, '');
 
