@@ -16,6 +16,7 @@ pipeline {
             steps {
                 sh '''
                     test -n "$REACT_APP_ADMIN_API_BASE_URL" || (echo "REACT_APP_ADMIN_API_BASE_URL is required." && exit 1)
+                    test -n "$REACT_APP_AIOPS_API_BASE_URL" || (echo "REACT_APP_AIOPS_API_BASE_URL is required." && exit 1)
                     test -n "$ADMIN_FRONTEND_S3_BUCKET" || (echo "ADMIN_FRONTEND_S3_BUCKET is required." && exit 1)
                     test -n "$ADMIN_FRONTEND_S3_PREFIX" || (echo "ADMIN_FRONTEND_S3_PREFIX is required." && exit 1)
                     test -n "$AWS_CREDENTIALS_ID" || (echo "AWS_CREDENTIALS_ID is required." && exit 1)
