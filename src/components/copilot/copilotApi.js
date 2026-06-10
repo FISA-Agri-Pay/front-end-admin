@@ -10,7 +10,7 @@ const getDefaultAiopsBaseUrl = () => {
   }
 
   if (typeof window !== 'undefined' && window.location.origin) {
-    return `${window.location.origin}/api/v1/admin`;
+    return `${window.location.origin}/api/v1/aiops`;
   }
 
   return '';
