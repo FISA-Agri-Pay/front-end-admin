@@ -14,7 +14,13 @@ const buildAiopsUrl = (path) => {
     throw new Error('AIOps API 주소가 설정되지 않았습니다. REACT_APP_AIOPS_API_BASE_URL 값을 확인해주세요.');
   }
 
-  return `${AIOPS_API_BASE_URL}${path}`;
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+
+  if (AIOPS_API_BASE_URL.endsWith('/admin') && normalizedPath.startsWith('/admin/')) {
+    return `${AIOPS_API_BASE_URL}${normalizedPath.slice('/admin'.length)}`;
+  }
+
+  return `${AIOPS_API_BASE_URL}${normalizedPath}`;
 };
 
 const getAiopsErrorMessage = (body, fallbackMessage, response) => {
