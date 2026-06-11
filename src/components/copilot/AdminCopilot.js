@@ -9,6 +9,42 @@ const recommendedPrompts = [
   { tone: 'purple', label: '관리자 Action 우선순위 정리해줘' },
 ];
 
+const messageSectionTitles = new Set(['요약', '주요 지표', '판단', '우선 조치', '데이터 한계']);
+
+const normalizeMessageText = (value) => String(value || '').replace(/\\n/g, '\n').trim();
+
+const getMessageLineClassName = (line) => {
+  const trimmedLine = line.trim();
+
+  if (!trimmedLine) {
+    return 'copilot-message__line copilot-message__line--spacer';
+  }
+
+  if (messageSectionTitles.has(trimmedLine)) {
+    return 'copilot-message__line copilot-message__line--heading';
+  }
+
+  if (/^[-*]\s+/.test(trimmedLine)) {
+    return 'copilot-message__line copilot-message__line--bullet';
+  }
+
+  return 'copilot-message__line';
+};
+
+const renderMessageText = (text) => {
+  const normalizedText = normalizeMessageText(text);
+
+  if (!normalizedText) {
+    return <span className="copilot-message__line">표시할 메시지가 없습니다.</span>;
+  }
+
+  return normalizedText.split('\n').map((line, index) => (
+    <span key={`${line}-${index}`} className={getMessageLineClassName(line)}>
+      {/^[-*]\s+/.test(line.trim()) ? line.replace(/^(\s*)[-*]\s+/, '$1') : line}
+    </span>
+  ));
+};
+
 const formatMessageTime = (value) => {
   if (!value) {
     return '방금';
@@ -192,13 +228,13 @@ function AdminCopilot() {
             <div className="copilot-messages" aria-live="polite" aria-busy={isSending}>
               {messages.map((message) => (
                 <article key={message.id} className={`copilot-message copilot-message--${message.role}`}>
-                  <p>{message.text}</p>
+                  <div className="copilot-message__bubble">{renderMessageText(message.text)}</div>
                   <time>{message.time}</time>
                 </article>
               ))}
               {isSending && (
                 <article className="copilot-message copilot-message--assistant">
-                  <p>답변을 생성하는 중입니다.</p>
+                  <div className="copilot-message__bubble">{renderMessageText('답변을 생성하는 중입니다.')}</div>
                   <time>방금</time>
                 </article>
               )}

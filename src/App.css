@@ -2338,13 +2338,53 @@ textarea:focus-visible,
   max-width: 92%;
 }
 
-.copilot-message p {
+.copilot-message__bubble {
   margin: 0;
   border-radius: 10px;
   padding: 13px 15px;
   font-size: 14px;
-  font-weight: 700;
-  line-height: 1.65;
+  font-weight: 650;
+  line-height: 1.7;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.copilot-message__line {
+  display: block;
+}
+
+.copilot-message__line:not(.copilot-message__line--spacer) + .copilot-message__line:not(.copilot-message__line--spacer) {
+  margin-top: 5px;
+}
+
+.copilot-message__line--spacer {
+  min-height: 8px;
+  margin-top: 0;
+}
+
+.copilot-message__line--heading {
+  margin-top: 12px;
+  color: var(--green);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.copilot-message__line--heading:first-child {
+  margin-top: 0;
+}
+
+.copilot-message__line--bullet {
+  position: relative;
+  padding-left: 14px;
+}
+
+.copilot-message__line--bullet::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: var(--green);
+  content: "-";
+  font-weight: 900;
 }
 
 .copilot-message time {
@@ -2357,7 +2397,7 @@ textarea:focus-visible,
   justify-self: start;
 }
 
-.copilot-message--assistant p {
+.copilot-message--assistant .copilot-message__bubble {
   background: #f1f3f6;
   color: var(--text-primary);
 }
@@ -2366,7 +2406,7 @@ textarea:focus-visible,
   justify-self: end;
 }
 
-.copilot-message--user p {
+.copilot-message--user .copilot-message__bubble {
   background: var(--green);
   color: #ffffff;
 }
