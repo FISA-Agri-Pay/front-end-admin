@@ -2387,6 +2387,10 @@ textarea:focus-visible,
   font-weight: 900;
 }
 
+.copilot-message__strong {
+  font-weight: 900;
+}
+
 .copilot-message time {
   color: var(--text-muted);
   font-size: 11px;
