@@ -40,7 +40,7 @@ const renderMessageText = (text) => {
 
   return normalizedText.split('\n').map((line, index) => (
     <span key={`${line}-${index}`} className={getMessageLineClassName(line)}>
-      {line.replace(/^[-*]\s+/, '')}
+      {/^[-*]\s+/.test(line.trim()) ? line.replace(/^(\s*)[-*]\s+/, '$1') : line}
     </span>
   ));
 };

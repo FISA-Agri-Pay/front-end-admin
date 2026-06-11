@@ -2353,7 +2353,7 @@ textarea:focus-visible,
   display: block;
 }
 
-.copilot-message__line + .copilot-message__line {
+.copilot-message__line:not(.copilot-message__line--spacer) + .copilot-message__line:not(.copilot-message__line--spacer) {
   margin-top: 5px;
 }
 
