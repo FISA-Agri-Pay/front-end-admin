@@ -34,6 +34,7 @@ function App() {
       setAdminSession(null);
       setActivePage('login');
     });
+    return () => setUnauthorizedHandler(null);
   }, []);
 
   const handleNavigate = (page) => {
