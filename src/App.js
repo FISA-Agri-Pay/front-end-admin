@@ -1,7 +1,8 @@
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { setUnauthorizedHandler } from './api/adminApi';
 import LoginPage from './components/auth/LoginPage';
-import { getStoredAdminSession } from './components/auth/authApi';
+import { clearAdminSession, getStoredAdminSession } from './components/auth/authApi';
 import BnplStatusPage from './components/bnpl/BnplStatusPage';
 import AdminCopilot from './components/copilot/AdminCopilot';
 import Dashboard from './components/Dashboard';
@@ -26,6 +27,15 @@ function App() {
   const [adminSession, setAdminSession] = useState(() => getStoredAdminSession());
   const [activePage, setActivePage] = useState(() => (getStoredAdminSession() ? 'dashboard' : 'login'));
   const isAuthenticated = Boolean(adminSession?.adminAccessToken);
+
+  useEffect(() => {
+    setUnauthorizedHandler(() => {
+      clearAdminSession();
+      setAdminSession(null);
+      setActivePage('login');
+    });
+    return () => setUnauthorizedHandler(null);
+  }, []);
 
   const handleNavigate = (page) => {
     setActivePage(isAuthenticated ? page : 'login');

@@ -80,6 +80,17 @@ export const saveAdminSession = (session, rememberMe) => {
   }
 };
 
+export const clearAdminSession = () => {
+  try {
+    STORAGE_KEYS.forEach((key) => {
+      localStorage.removeItem(key);
+      sessionStorage.removeItem(key);
+    });
+  } catch (error) {
+    // Storage may be unavailable in private or restricted browser contexts.
+  }
+};
+
 export const getStoredAdminSession = () => {
   try {
     const storage = localStorage.getItem('adminAccessToken') ? localStorage : sessionStorage;
