@@ -74,20 +74,19 @@ const getDocumentExtension = (document) => {
   return extension.toLowerCase();
 };
 
-const getPrimaryDocument = (documents = []) =>
-  documents.find((document) => document.documentType === 'AGRI_MANAGEMENT_REGISTRATION') || documents[0] || null;
-
 function LimitReviewDetailPage() {
   const [review, setReview] = useState(null);
   const [isMatched, setIsMatched] = useState('yes');
   const [approvedLimit, setApprovedLimit] = useState('');
   const [zoom, setZoom] = useState(100);
+  const [currentDocumentIndex, setCurrentDocumentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [message, setMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const document = useMemo(() => getPrimaryDocument(review?.documents), [review]);
+  const documents = useMemo(() => review?.documents || [], [review]);
+  const document = useMemo(() => documents[currentDocumentIndex] || null, [documents, currentDocumentIndex]);
   const documentFileName = useMemo(() => getDocumentFileName(document), [document]);
   const documentExtension = useMemo(() => getDocumentExtension(document), [document]);
   const isImageDocument = ['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(documentExtension);
@@ -129,6 +128,7 @@ function LimitReviewDetailPage() {
       setApprovedLimit(formatAmountInput(detail?.decision?.approvedAmount || detail?.ass?.systemEstimatedLimitAmount));
       setIsMatched('yes');
       setZoom(100);
+      setCurrentDocumentIndex(0);
       setMessage(nextMessage);
     } catch (error) {
       setReview(null);
@@ -229,6 +229,14 @@ function LimitReviewDetailPage() {
     setZoom((currentZoom) => Math.min(140, currentZoom + 10));
   };
 
+  const handlePrevDocument = () => {
+    setCurrentDocumentIndex((i) => Math.max(0, i - 1));
+  };
+
+  const handleNextDocument = () => {
+    setCurrentDocumentIndex((i) => Math.min(documents.length - 1, i + 1));
+  };
+
   return (
     <main className="limit-review-page">
       <div className="limit-review-page__content">
@@ -241,10 +249,32 @@ function LimitReviewDetailPage() {
         <section className="document-panel" aria-labelledby="submitted-document-title">
           <div className="document-panel__header">
             <div className="document-panel__title-group">
-              <h3 id="submitted-document-title">제출 서류 뷰어</h3>
               <span className={`document-panel__file ${document ? '' : 'document-panel__file--muted'}`}>
                 {documentFileName}
               </span>
+              {documents.length > 1 && (
+                <div className="document-nav" aria-label="서류 탐색">
+                  <button
+                    type="button"
+                    className="document-nav__btn"
+                    aria-label="이전 서류"
+                    disabled={currentDocumentIndex === 0}
+                    onClick={handlePrevDocument}
+                  >
+                    ‹
+                  </button>
+                  <span className="document-nav__indicator">{currentDocumentIndex + 1} / {documents.length}</span>
+                  <button
+                    type="button"
+                    className="document-nav__btn"
+                    aria-label="다음 서류"
+                    disabled={currentDocumentIndex === documents.length - 1}
+                    onClick={handleNextDocument}
+                  >
+                    ›
+                  </button>
+                </div>
+              )}
             </div>
             <div className="document-panel__zoom" aria-label="문서 확대 비율">
               <button type="button" aria-label="축소" onClick={handleZoomOut}>
@@ -366,7 +396,7 @@ function LimitReviewDetailPage() {
               </fieldset>
             </section>
 
-            <section className="review-section">
+            <section className="review-section review-section--with-border">
               <label className="approved-limit-field" htmlFor="approvedLimit">
                 <span>최종 승인 한도 금액</span>
                 <div>

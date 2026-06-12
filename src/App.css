@@ -124,7 +124,7 @@ textarea:focus-visible,
   align-items: center;
   justify-content: space-between;
   min-height: 64px;
-  padding: 0 30px;
+  padding: 0 50px;
   background: #ffffff;
   border-bottom: 1px solid var(--border-soft);
 }
@@ -1742,6 +1742,47 @@ textarea:focus-visible,
 .document-panel__zoom span {
   min-width: 42px;
   text-align: center;
+}
+
+.document-nav {
+  display: inline-flex;
+  align-items: center;
+  height: 29px;
+  flex: 0 0 auto;
+  gap: 2px;
+}
+
+.document-nav__btn {
+  display: grid;
+  width: 26px;
+  height: 26px;
+  place-items: center;
+  border: 1px solid #d5dce4;
+  border-radius: 5px;
+  background: #ffffff;
+  color: #4f5965;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.document-nav__btn:hover:not(:disabled) {
+  background: #f4f6f8;
+  border-color: #bcc5ce;
+}
+
+.document-nav__btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.document-nav__indicator {
+  min-width: 36px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #4f5965;
 }
 
 .document-viewer {
