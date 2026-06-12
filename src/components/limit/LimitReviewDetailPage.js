@@ -249,7 +249,6 @@ function LimitReviewDetailPage() {
         <section className="document-panel" aria-labelledby="submitted-document-title">
           <div className="document-panel__header">
             <div className="document-panel__title-group">
-              <h3 id="submitted-document-title">제출 서류 뷰어</h3>
               <span className={`document-panel__file ${document ? '' : 'document-panel__file--muted'}`}>
                 {documentFileName}
               </span>
@@ -397,7 +396,7 @@ function LimitReviewDetailPage() {
               </fieldset>
             </section>
 
-            <section className="review-section">
+            <section className="review-section review-section--with-border">
               <label className="approved-limit-field" htmlFor="approvedLimit">
                 <span>최종 승인 한도 금액</span>
                 <div>
