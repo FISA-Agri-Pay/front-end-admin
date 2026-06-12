@@ -124,7 +124,7 @@ textarea:focus-visible,
   align-items: center;
   justify-content: space-between;
   min-height: 64px;
-  padding: 0 30px;
+  padding: 0 50px;
   background: #ffffff;
   border-bottom: 1px solid var(--border-soft);
 }
