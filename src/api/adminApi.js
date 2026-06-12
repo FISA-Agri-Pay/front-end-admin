@@ -66,7 +66,7 @@ export const requestAdminApi = async (
   const body = await parseJsonResponse(response);
 
   if (!response.ok) {
-    if (response.status === 401 && unauthorizedHandler) {
+    if (response.status === 401 && typeof unauthorizedHandler === 'function') {
       unauthorizedHandler();
     }
     throw new Error(getAdminErrorMessage(body, fallbackMessage, response));
