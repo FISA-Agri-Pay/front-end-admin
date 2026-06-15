@@ -494,12 +494,13 @@ textarea:focus-visible,
 
 .orders-table__row {
   display: grid;
-  grid-template-columns: 50px 70px minmax(120px, 1fr) 110px;
+  grid-template-columns: 50px 90px minmax(120px, 1fr) 110px;
   align-items: center;
   min-height: 40px;
   gap: 0;
   border-bottom: 1px solid var(--border-soft);
   font-size: var(--font-size-md);
+  text-align: center;
 }
 
 .orders-table__row:last-child {
@@ -512,7 +513,13 @@ textarea:focus-visible,
   font-size: var(--font-size-xs);
 }
 
-.orders-table__row span:nth-child(2),
+.orders-table__row span:nth-child(2) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+}
+
 .orders-table__row span:nth-child(3) {
   overflow: hidden;
   text-overflow: ellipsis;
