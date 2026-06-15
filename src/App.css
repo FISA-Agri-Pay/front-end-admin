@@ -2501,6 +2501,10 @@ textarea:focus-visible,
   font-weight: 900;
 }
 
+.copilot-message__strong {
+  font-weight: 900;
+}
+
 .copilot-message time {
   color: var(--text-muted);
   font-size: var(--font-size-2xs);

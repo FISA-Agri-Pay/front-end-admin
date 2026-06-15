@@ -73,6 +73,32 @@ const getMessageLineClassName = (line) => {
   return 'copilot-message__line';
 };
 
+const renderInlineMessageText = (line) => {
+  const parts = [];
+  const boldPattern = /\*\*(.+?)\*\*/g;
+  let lastIndex = 0;
+  let match;
+
+  while ((match = boldPattern.exec(line)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(line.slice(lastIndex, match.index));
+    }
+
+    parts.push(
+      <strong key={`bold-${match.index}`} className="copilot-message__strong">
+        {match[1]}
+      </strong>,
+    );
+    lastIndex = match.index + match[0].length;
+  }
+
+  if (lastIndex < line.length) {
+    parts.push(line.slice(lastIndex));
+  }
+
+  return parts.length > 0 ? parts : line;
+};
+
 const renderMessageText = (text) => {
   const normalizedText = normalizeMessageText(text);
 
@@ -80,11 +106,15 @@ const renderMessageText = (text) => {
     return <span className="copilot-message__line">표시할 메시지가 없습니다.</span>;
   }
 
-  return normalizedText.split('\n').map((line, index) => (
-    <span key={`${line}-${index}`} className={getMessageLineClassName(line)}>
-      {/^[-*]\s+/.test(line.trim()) ? line.replace(/^(\s*)[-*]\s+/, '$1') : line}
-    </span>
-  ));
+  return normalizedText.split('\n').map((line, index) => {
+    const displayLine = /^[-*]\s+/.test(line.trim()) ? line.replace(/^(\s*)[-*]\s+/, '$1') : line;
+
+    return (
+      <span key={`${line}-${index}`} className={getMessageLineClassName(line)}>
+        {renderInlineMessageText(displayLine)}
+      </span>
+    );
+  });
 };
 
 const formatMessageTime = (value) => {
