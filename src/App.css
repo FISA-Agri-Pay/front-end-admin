@@ -308,29 +308,40 @@ textarea:focus-visible,
 }
 
 .chart__scale {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 4px 8px 25px 0;
+  position: relative;
   color: var(--text-muted);
   font-size: var(--font-size-sm);
 }
 
+.chart__scale span {
+  position: absolute;
+  right: 14px;
+  white-space: nowrap;
+  transform: translateY(-50%);
+}
+
+.chart__scale span:nth-child(1) { top: 0; transform: none; }
+.chart__scale span:nth-child(2) { top: calc((100% - 34px) / 4); }
+.chart__scale span:nth-child(3) { top: calc((100% - 34px) / 2); }
+.chart__scale span:nth-child(4) { top: calc((100% - 34px) * 3 / 4); }
+.chart__scale span:nth-child(5) { top: calc(100% - 34px); }
+
 .chart__plot {
   position: relative;
   min-width: 0;
-  border-bottom: 2px solid #cfd6df;
+  display: flex;
+  flex-direction: column;
 }
 
 .chart__grid {
   position: absolute;
-  inset: 0 0 0 0;
-  background: repeating-linear-gradient(
+  inset: 0 0 34px 0;
+  background: linear-gradient(
     to bottom,
-    transparent 0,
-    transparent 38px,
-    #e5e9ee 39px,
-    transparent 40px
+    #e5e9ee 1px, transparent 1px 25%,
+    #e5e9ee 25% calc(25% + 1px), transparent calc(25% + 1px) 50%,
+    #e5e9ee 50% calc(50% + 1px), transparent calc(50% + 1px) 75%,
+    #e5e9ee 75% calc(75% + 1px), transparent calc(75% + 1px)
   );
 }
 
@@ -340,7 +351,8 @@ textarea:focus-visible,
   display: grid;
   grid-template-columns: repeat(7, minmax(48px, 1fr));
   align-items: end;
-  height: 100%;
+  flex: 1;
+  border-bottom: 2px solid #cfd6df;
 }
 
 .chart__bar-group {
@@ -354,7 +366,14 @@ textarea:focus-visible,
   padding: 0 10px;
 }
 
+.chart__dates {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(48px, 1fr));
+  padding-top: 10px;
+}
+
 .chart__bar {
+  position: relative;
   width: min(40px, 70%);
   min-height: 8px;
   border-radius: 5px 5px 0 0;
@@ -367,17 +386,20 @@ textarea:focus-visible,
 
 .chart__value {
   position: absolute;
-  bottom: calc(80% + 10px);
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
   color: var(--green);
   font-size: var(--font-size-sm);
+  white-space: nowrap;
 }
 
 .chart__date {
   display: block;
   height: 24px;
-  margin-top: 10px;
   color: #596574;
   font-size: var(--font-size-md);
+  text-align: center;
 }
 
 .chart__date--highlight {

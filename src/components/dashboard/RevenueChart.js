@@ -52,14 +52,19 @@ function RevenueChart({ data = [], isLoading }) {
             <div className="chart__bars">
               {chartData.map((item) => (
                 <div className="chart__bar-group" key={item.date}>
-                  {item.highlight && <strong className="chart__value">{item.label}</strong>}
                   <div
                     className={`chart__bar ${item.highlight ? 'chart__bar--highlight' : ''}`}
                     style={{ height: `${(item.amount / maxAmount) * 100}%` }}
                     title={`${item.date} ${item.label}`}
-                  />
-                  <span className={item.highlight ? 'chart__date chart__date--highlight' : 'chart__date'}>{item.date}</span>
+                  >
+                    {item.highlight && <strong className="chart__value">{item.label}</strong>}
+                  </div>
                 </div>
+              ))}
+            </div>
+            <div className="chart__dates" aria-hidden="true">
+              {chartData.map((item) => (
+                <span key={item.date} className={item.highlight ? 'chart__date chart__date--highlight' : 'chart__date'}>{item.date}</span>
               ))}
             </div>
           </div>
