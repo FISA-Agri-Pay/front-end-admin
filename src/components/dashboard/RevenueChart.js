@@ -55,6 +55,8 @@ function RevenueChart({ data = [], isLoading }) {
                   <div
                     className={`chart__bar ${item.highlight ? 'chart__bar--highlight' : ''}`}
                     style={{ height: `${(item.amount / maxAmount) * 100}%` }}
+                    role="img"
+                    aria-label={`${item.date} 외상 이용액 ${item.label}`}
                     title={`${item.date} ${item.label}`}
                   >
                     {item.highlight && <strong className="chart__value">{item.label}</strong>}
