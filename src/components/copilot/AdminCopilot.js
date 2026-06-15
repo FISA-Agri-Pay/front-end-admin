@@ -45,10 +45,10 @@ const promptIcons = {
 };
 
 const recommendedPrompts = [
-  { tone: 'green', icon: 'review', label: '심사 대기 건 요약해줘' },
-  { tone: 'red', icon: 'warning', label: '연체 위험 고객 현황 알려줘' },
-  { tone: 'blue', icon: 'chart', label: '오늘 BNPL 이용 현황 알려줘' },
-  { tone: 'purple', icon: 'priority', label: '관리자 Action 우선순위 정리해줘' },
+  { icon: 'review', label: '심사 대기 건 요약해줘' },
+  { icon: 'warning', label: '연체 위험 고객 현황 알려줘' },
+  { icon: 'chart', label: '오늘 BNPL 이용 현황 알려줘' },
+  { icon: 'priority', label: '관리자 Action 우선순위 정리해줘' },
 ];
 
 const messageSectionTitles = new Set(['요약', '주요 지표', '판단', '우선 조치', '데이터 한계']);
@@ -293,10 +293,15 @@ function AdminCopilot() {
                     disabled={isSending}
                     onClick={() => sendMessage(prompt.label)}
                   >
-                    <span className={`copilot-prompt__mark copilot-prompt__mark--${prompt.tone}`} aria-hidden="true">
+                    <span className="copilot-prompt__icon" aria-hidden="true">
                       {promptIcons[prompt.icon]}
                     </span>
-                    {prompt.label}
+                    <span className="copilot-prompt__text">{prompt.label}</span>
+                    <span className="copilot-prompt__chevron" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none">
+                        <path d="m9 6 6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </span>
                   </button>
                 ))}
               </div>

@@ -2520,24 +2520,25 @@ textarea:focus-visible,
 
 .copilot-prompt {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: 10px;
-  min-height: 42px;
-  border: 1px solid #d8dee6;
-  border-radius: 7px;
+  gap: 11px;
+  min-height: 44px;
+  border: 1px solid var(--border-soft);
+  border-radius: 10px;
   background: #ffffff;
   color: var(--text-primary);
   cursor: pointer;
-  padding: 0 13px;
+  padding: 0 12px;
   text-align: left;
   font-size: var(--font-size-sm);
-  font-weight: 900;
+  font-weight: 600;
+  transition: border-color 150ms ease, background 150ms ease;
 }
 
 .copilot-prompt:hover {
-  border-color: #c2cad4;
-  background: #fbfcfd;
+  border-color: #d2dad3;
+  background: #f8faf8;
 }
 
 .copilot-prompt:disabled {
@@ -2545,38 +2546,51 @@ textarea:focus-visible,
   opacity: 0.62;
 }
 
-.copilot-prompt__mark {
-  position: relative;
+.copilot-prompt__icon {
   display: grid;
-  width: 22px;
-  height: 22px;
+  width: 28px;
+  height: 28px;
   place-items: center;
-  border-radius: 6px;
+  border-radius: 8px;
+  background: #f1f3f6;
+  color: #53606c;
+  transition: background 150ms ease, color 150ms ease;
 }
 
-.copilot-prompt__mark svg {
-  width: 14px;
-  height: 14px;
+.copilot-prompt__icon svg {
+  width: 15px;
+  height: 15px;
 }
 
-.copilot-prompt__mark--green {
+.copilot-prompt:hover .copilot-prompt__icon {
   background: var(--green-soft);
   color: var(--green);
 }
 
-.copilot-prompt__mark--red {
-  background: var(--red-soft);
-  color: var(--red);
+.copilot-prompt__text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.copilot-prompt__mark--blue {
-  background: #e3f0ff;
-  color: var(--blue);
+.copilot-prompt__chevron {
+  display: grid;
+  place-items: center;
+  color: #b4bcc5;
+  transform: translateX(-2px);
+  opacity: 0;
+  transition: opacity 150ms ease, transform 150ms ease;
 }
 
-.copilot-prompt__mark--purple {
-  background: #f1e8ff;
-  color: #7a4fb0;
+.copilot-prompt__chevron svg {
+  width: 16px;
+  height: 16px;
+}
+
+.copilot-prompt:hover .copilot-prompt__chevron {
+  color: var(--green);
+  transform: translateX(0);
+  opacity: 1;
 }
 
 .copilot-section--recent {
