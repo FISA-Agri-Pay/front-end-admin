@@ -155,6 +155,7 @@ textarea:focus-visible,
   display: inline-flex;
   align-items: center;
   gap: 14px;
+  margin-left: auto;
   color: #4f5965;
   font-size: var(--font-size-md);
   white-space: nowrap;
