@@ -2,11 +2,53 @@ import { useCallback, useRef, useState } from 'react';
 import { getStoredAdminSession } from '../auth/authApi';
 import { askAdminCopilot, fetchAdminCopilotSessions } from './copilotApi';
 
+const promptIcons = {
+  review: (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M15 4H6a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8l-4-4Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <path d="M14 4v4h4M8 13h6M8 16h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ),
+  warning: (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M12 4 3 19h18L12 4Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <path d="M12 10v4M12 17h.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  ),
+  chart: (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M5 20V10M12 20V4M19 20v-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  ),
+  priority: (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="m4 6 2 2 3-3M4 13l2 2 3-3M4 20l2 2 3-3"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path d="M13 6h7M13 13h7M13 20h7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  ),
+};
+
 const recommendedPrompts = [
-  { tone: 'green', label: '심사 대기 건 요약해줘' },
-  { tone: 'red', label: '연체 위험 고객 현황 알려줘' },
-  { tone: 'blue', label: '오늘 BNPL 이용 현황 알려줘' },
-  { tone: 'purple', label: '관리자 Action 우선순위 정리해줘' },
+  { icon: 'review', label: '심사 대기 건 요약해줘' },
+  { icon: 'warning', label: '연체 위험 고객 현황 알려줘' },
+  { icon: 'chart', label: '오늘 BNPL 이용 현황 알려줘' },
+  { icon: 'priority', label: '관리자 Action 우선순위 정리해줘' },
 ];
 
 const messageSectionTitles = new Set(['요약', '주요 지표', '판단', '우선 조치', '데이터 한계']);
@@ -251,8 +293,15 @@ function AdminCopilot() {
                     disabled={isSending}
                     onClick={() => sendMessage(prompt.label)}
                   >
-                    <span className={`copilot-prompt__mark copilot-prompt__mark--${prompt.tone}`} aria-hidden="true" />
-                    {prompt.label}
+                    <span className="copilot-prompt__icon" aria-hidden="true">
+                      {promptIcons[prompt.icon]}
+                    </span>
+                    <span className="copilot-prompt__text">{prompt.label}</span>
+                    <span className="copilot-prompt__chevron" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none">
+                        <path d="m9 6 6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </span>
                   </button>
                 ))}
               </div>
