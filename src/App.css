@@ -2554,25 +2554,9 @@ textarea:focus-visible,
   border-radius: 6px;
 }
 
-.copilot-prompt__mark::before,
-.copilot-prompt__mark::after {
-  content: '';
-  position: absolute;
-  background: currentcolor;
-}
-
-.copilot-prompt__mark::before {
-  width: 10px;
-  height: 12px;
-  border: 2px solid currentcolor;
-  border-radius: 3px;
-  background: transparent;
-}
-
-.copilot-prompt__mark::after {
-  width: 8px;
-  height: 2px;
-  border-radius: 999px;
+.copilot-prompt__mark svg {
+  width: 14px;
+  height: 14px;
 }
 
 .copilot-prompt__mark--green {
