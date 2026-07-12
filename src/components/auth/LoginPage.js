@@ -122,7 +122,7 @@ function LoginPage({ onLoginSuccess }) {
           </button>
         </form>
       </section>
-      <footer className="login-page__footer">© 2026 BNP 관리 시스템 · 버전 2.4.1 · 최종 업데이트: 2026.05.12</footer>
+      <footer className="login-page__footer">© 2026 BNP 관리 시스템 · 버전 2.4.2 · 최종 업데이트: 2026.06.12</footer>
     </main>
   );
 }

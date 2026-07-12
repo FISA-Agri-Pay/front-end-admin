@@ -1,3 +1,9 @@
+let unauthorizedHandler = null;
+
+export const setUnauthorizedHandler = (handler) => {
+  unauthorizedHandler = handler;
+};
+
 const configuredApiBaseUrl = (process.env.REACT_APP_ADMIN_API_BASE_URL || 'http://localhost:8080').replace(/\/$/, '');
 
 export const API_ORIGIN = configuredApiBaseUrl.replace(/\/api\/v1\/admin$/, '');
@@ -60,6 +66,9 @@ export const requestAdminApi = async (
   const body = await parseJsonResponse(response);
 
   if (!response.ok) {
+    if (response.status === 401 && typeof unauthorizedHandler === 'function') {
+      unauthorizedHandler();
+    }
     throw new Error(getAdminErrorMessage(body, fallbackMessage, response));
   }
 
