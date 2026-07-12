@@ -144,7 +144,7 @@ front-end-admin/
 │  ├─ components/
 │  │  ├─ auth/           # 관리자 로그인/인증
 │  │  ├─ bnpl/           # BNPL 현황, 필터, 내역 테이블
-│  │  ├─ copilot/        # 관리자 Copilot 인터페이스
+│  │  ├─ copilot/        # 관리자 챗봇 인터페이스
 │  │  ├─ dashboard/      # 메인 대시보드 차트 및 지표
 │  │  ├─ limit/          # 신용 한도 심사 상세 조회
 │  │  ├─ order/          # 주문 및 배송 관리
