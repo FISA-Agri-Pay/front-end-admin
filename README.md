@@ -1,4 +1,4 @@
-# 🌾 FISA-Agri-Pay · Front-end-admin
+# 🌱 콩콩팥팥 · Front-end-admin
 
 > 농업 데이터 기반 **BNPL(Buy Now, Pay Later) 플랫폼**의 관리자(Admin) 전용 프론트엔드 웹 애플리케이션입니다.
 > 농업인의 신용 한도 심사, 농자재 상품 관리, 사용자들의 BNPL 결제 및 상환/연체 현황 모니터링 기능을 제공하며, AIOps와 연동되는 관리자 Copilot 기능을 통해 운영 효율성을 높입니다.
@@ -6,22 +6,6 @@
 ![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
-
----
-
-## 목차
-
-- [프로젝트 개요](#overview)
-- [핵심 기능 및 화면 구성](#features)
-  - [대시보드 (Dashboard)](#dashboard)
-  - [신용 심사 관리 (Limit Review)](#limit)
-  - [농자재 상품 관리 (Product)](#product)
-  - [주문 및 배송 관리 (Order)](#order)
-  - [BNPL 원장 및 현황 (BNPL Ledger)](#bnpl)
-  - [관리자 Copilot (Admin Copilot)](#copilot)
-- [기술 스택](#tech-stack)
-- [디렉터리 구조](#directory)
-- [관련 레포지토리](#repositories)
 
 ---
 
